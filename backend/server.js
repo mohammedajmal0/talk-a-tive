@@ -1,7 +1,10 @@
 const express=require('express');
 const dotenv=require('dotenv');
 const { chats } = require('./data/data');
+const connectDb = require('./config/db');
+const color=require('colors')
 dotenv.config();
+connectDb();
 const app=express()
 const port=process.env.PORT
 app.listen(port,(console.log(`server started on port ${port}`)));
