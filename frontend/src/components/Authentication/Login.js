@@ -19,7 +19,52 @@ const Login = () => {
   const history = useHistory();
 //   const { setUser } = ChatState();
 
-  const submitHandler=()=>{}
+  const submitHandler=async ()=>{
+    setLoading(true);
+    if(!email || !password){
+      toast({
+        title: "Please Fill all the Feilds",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      })
+      setLoading(false);
+      return;
+    }
+    try {
+      const config={
+        headers :{
+          "Content-type":"application/json"
+        }
+      }
+
+      const {data}=await axios.post("/api/user/login",{email,password},config)
+      if(data){
+        toast({
+          title: "Loggen in Successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        })
+      }
+      localStorage.setItem("userInfo",JSON.stringify(data))
+        history.push("/chats");
+        setLoading(false);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.response.data.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+    }
+
+  }
   return (
     <VStack spacing="10px">
       <FormControl id="email" isRequired>
@@ -62,7 +107,7 @@ const Login = () => {
         width="100%"
         onClick={() => {
           setEmail("guest@example.com");
-          setPassword("123456");
+          setPassword("1234");
         }}
       >
         Get Guest User Credentials

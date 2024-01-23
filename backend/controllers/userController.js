@@ -3,7 +3,6 @@ const User = require('../models/userModel');
 const generateToken=require("../config/generateToken")
 const mongoose=require('mongoose');
 const registerUser = asyncHandler(async(req,res)=>{
-    console.log("entered")
     const {name,email,password,pic}=req.body
 
     if(!name || !email || !password){
@@ -57,5 +56,16 @@ const authUser=asyncHandler(async(req,res)=>{
         throw new Error("invalid email or password")
     }
 })
-module.exports={registerUser,authUser}
+
+const allUser=asyncHandler(async(req,res)=>{
+    const keyword=req.query.search ? {
+        $or : [
+            {name : {$regex : req.query.search, $options : "i"}},
+            {email : {$regex : req.query.search, $options : "i"}}
+        ]
+    }:{}
+    const users=await User.find(keyword).find({_id : {$ne : req.user._id}});
+    res.send(users)
+})
+module.exports={registerUser,authUser,allUser}
 
