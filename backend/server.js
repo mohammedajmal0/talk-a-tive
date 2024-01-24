@@ -5,6 +5,7 @@ const connectDb = require('./config/db');
 const {notFound,errorHandler} = require('./middlewares/errorMiddleware')
 const color=require('colors')
 const userRoutes=require('./routes/userRoutes');
+const chatRoutes=require('./routes/chatRoutes');
 dotenv.config();
 connectDb();
 const app=express()
@@ -14,10 +15,11 @@ app.listen(port,(console.log(`server started on port ${port}`)));
 app.get("/",(req,res)=>{
     res.send("hello")
 })
-app.get("/api/chat",(req,res)=>{
-    res.send(chats)
-})
+// app.get("/api/chat",(req,res)=>{
+//     res.send(chats)
+// })
 app.use('/api/user',userRoutes);
+app.use('/api/chat',chatRoutes);
 
 app.use(notFound);
 app.use(errorHandler)
