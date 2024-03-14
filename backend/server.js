@@ -13,7 +13,7 @@ app.use(express.json()) // to accept json data
 const port=process.env.PORT
 app.listen(port,(console.log(`server started on port ${port}`)));
 app.get("/",(req,res)=>{
-    res.send("hello")
+    res.send("hello in LinuxMint")
 })
 // app.get("/api/chat",(req,res)=>{
 //     res.send(chats)
