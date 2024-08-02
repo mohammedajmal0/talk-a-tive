@@ -42,7 +42,7 @@ const Login = () => {
       const {data}=await axios.post("/api/user/login",{email,password},config)
       if(data){
         toast({
-          title: "Loggen in Successfully",
+          title: "Logged in Successfully",
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -97,8 +97,7 @@ const Login = () => {
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
-        isLoading={loading}
-      >
+        isLoading={loading}>
         Login
       </Button>
       <Button
