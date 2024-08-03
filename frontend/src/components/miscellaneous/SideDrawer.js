@@ -1,4 +1,4 @@
-import { Text, Tooltip } from '@chakra-ui/react';
+import { Drawer, DrawerContent, DrawerHeader, DrawerOverlay, Text, Tooltip } from '@chakra-ui/react';
 import React from 'react'
 import { useState } from 'react';
 import { Box } from '@chakra-ui/react';
@@ -15,6 +15,7 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from '@chakra-ui/react';
 import ProfileModal from './ProfileModal';
 import { useHistory } from 'react-router-dom';
+import {useDisclosure} from '@chakra-ui/hooks'
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -28,10 +29,9 @@ const SideDrawer = () => {
     chats,
     setChats,
   } = ChatState();
-  const onOpen=()=>{
-    
-  }
+  
   const history=useHistory();
+  const{isOpen,onOpen,onClose}=useDisclosure
   const logoutHandler=()=>{
     localStorage.removeItem("userInfo");
     history.push("/")
@@ -84,6 +84,14 @@ const SideDrawer = () => {
           </Menu>
         </div>
       </Box>
+
+      <Drawer placement='left' onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
+          {/* Additional content for searching users can be added here */}
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
